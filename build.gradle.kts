@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 
 plugins {
 	id("org.springframework.boot") version "2.6.7"
@@ -22,8 +23,15 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("software.amazon.awssdk:dynamodb:2.10.42")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+}
+
+configure<DependencyManagementExtension> {
+	imports {
+		mavenBom("software.amazon.awssdk:bom:2.10.42")
+	}
 }
 
 tasks.withType<KotlinCompile> {
